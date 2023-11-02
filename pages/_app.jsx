@@ -9,8 +9,12 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  h1, h3 {
+    font-family: 'Orbitron', sans-serif;
+  }
+
   body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Pridi', serif;
     color: ${(props) => props.theme.black};
     background-color: ${(props) => props.theme.background};
   }

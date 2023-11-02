@@ -6,10 +6,12 @@ import { Button } from '../../../pages'
 export default function ProductCard({ img, title, price, desc, availible, rating }) {
   return (
     <Product>
-      <ProductImage src={img} alt={title} />
+      <ImageContainer>
+        <ProductImage src={img} alt={title} />
+      </ImageContainer>
       <ProductTitle>{title}</ProductTitle>
       <Stars rating={rating} />
-      <ProductPrice>{price}</ProductPrice>
+      <ProductPrice>${price}</ProductPrice>
       <Description>{desc}</Description>
       {availible ? (
         <Button href="#" className="btn">
@@ -32,14 +34,30 @@ ProductCard.defaultProps = {
 }
 
 const Product = styled.div`
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 350px;
+  padding: 20px 0 20px 0;
   text-align: center;
-  margin: 0 20px;
+  margin: 20px;
+  flex-wrap: wrap;
+`
+const ImageContainer = styled.div`
+  width: 210px;
+  height: 210px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+
+  @media (min-width: 1170px) {
+    align-items: center;
+  }
 `
 
 const ProductImage = styled.img`
-  width: 200px;
-  height: 200px;
+  max-width: 200px;
+  max-height: 200px;
   margin-bottom: 10px;
 `
 
@@ -49,11 +67,14 @@ const ProductTitle = styled.h3`
 `
 
 const ProductPrice = styled.p`
-  font-size: 16px;
-  margin-bottom: 10px;
+  font-size: 22px;
+  margin: 10px 0 10px 0;
+  font-weight: 600;
 `
 
 const Description = styled.p`
   font-size: 14px;
-  margin: 5px;
+  margin: 10px;
+  width: 200px;
+  height: 50px;
 `

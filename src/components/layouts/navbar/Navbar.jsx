@@ -1,17 +1,30 @@
 import styled from 'styled-components'
 
 const Header = styled.header`
-  background-color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: ${(props) => props.theme.Trueblack};
   color: #fff;
   padding: 20px;
+  flex-wrap: wrap;
+  width: 100%;
+
+  @media (max-width: 380px) {
+    width: 100vh;
+  }
 `
 
 const Title = styled.h1`
   font-size: 24px;
   margin-bottom: 10px;
+  min-width: 360px;
+  flex: 1;
 `
 
 const Nav = styled.nav`
+  flex: 1;
+  min-width: 300px;
   ul {
     list-style-type: none;
   }
@@ -25,7 +38,7 @@ const Nav = styled.nav`
 export default function Navbar() {
   return (
     <Header>
-      <Title>Welcome to My Web Store</Title>
+      <Title>Mandalarian Store</Title>
       <Nav>
         <ul>
           <li>

@@ -1,115 +1,104 @@
 import styled from 'styled-components'
 
-function HomePage() { //em produtos preciso fazer um map
+import Navbar from '../src/components/layouts/navbar/Navbar'
+import ProductCard from '../src/components/card/ProductCard'
+import Loading from '../src/components/layouts/loading/Loading'
+
+import { useEffect, useState } from 'react'
+
+function HomePage() {
+  const [loading, setLoading] = useState(true)
+  const [products, setProducts] = useState([])
+
+  /* const fetcher = async () => {
+    try {
+      setLoading(true)
+      const response = await axios.get()
+      if (response.status === 200) {
+        console.log('resposta axios:', response)
+        setProducts(response.data)
+        setLoading(false)
+      } else {
+        console.error('Status de resposta inesperado:', response.status)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  } */
+
+  const fetcher = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch('/api?url=equipments')
+      if (response.status === 200) {
+        const data = await response.json()
+        setProducts(data)
+        setLoading(false)
+      } else {
+        throw new Error('Status de resposta inesperado:', response.status)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      fetcher()
+    }, 2000)
+  }, [])
+
   return (
-    <AppContainer>
-      <Header>
-        <Title>Welcome to My Web Store</Title>
-        <Nav>
-          <ul>
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">Shop</a>
-            </li>
-            <li>
-              <a href="#">About</a>
-            </li>
-            <li>
-              <a href="#">Contact</a>
-            </li>
-          </ul>
-        </Nav>
-      </Header>
-      <Banner>
-        <BannerTitle>Shop the Latest Trends</BannerTitle>
-        <BannerText>Discover a wide range of products that suit your style and needs.</BannerText>
-        <Button href="#" className="btn">
-          Shop Now
-        </Button>
-      </Banner>
-      <FeaturedProducts>
-        <FeaturedProductsTitle>Featured Products</FeaturedProductsTitle>
-        <Product>
-          <ProductImage src="product1.jpg" alt="Product 1" />
-          <ProductTitle>Product 1</ProductTitle>
-          <ProductPrice>$19.99</ProductPrice>
-          <Button href="#" className="btn">
-            Add to Cart
-          </Button>
-        </Product>
-        <Product>
-          <ProductImage src="product2.jpg" alt="Product 2" />
-          <ProductTitle>Product 2</ProductTitle>
-          <ProductPrice>$24.99</ProductPrice>
-          <Button href="#" className="btn">
-            Add to Cart
-          </Button>
-        </Product>
-        <Product>
-          <ProductImage src="product3.jpg" alt="Product 3" />
-          <ProductTitle>Product 3</ProductTitle>
-          <ProductPrice>$14.99</ProductPrice>
-          <Button href="#" className="btn">
-            Add to Cart
-          </Button>
-        </Product>
-      </FeaturedProducts>
-      <Newsletter>
-        <NewsletterTitle>Subscribe to Our Newsletter</NewsletterTitle>
-        <NewsletterForm>
-          <input type="email" placeholder="Enter your email address" />
-          <Button type="submit" className="btn">
-            Subscribe
-          </Button>
-        </NewsletterForm>
-      </Newsletter>
-      <Footer>
-        <p>&copy; 2022 My Web Store. All rights reserved.</p>
-      </Footer>
-    </AppContainer>
+    <>
+      {loading ? (
+        <Loading loading={loading} />
+      ) : (
+        <AppContainer>
+          <Navbar />
+          <Banner>
+            <BannerTitle>Shop the Latest Trends</BannerTitle>
+            <BannerText>
+              Discover a wide range of products that suit your style and needs.
+            </BannerText>
+            <Button href="#" className="btn">
+              Shop Now
+            </Button>
+          </Banner>
+          <FeaturedProductsTitle>Featured Products</FeaturedProductsTitle>
+          <FeaturedProducts>
+            {products.map((product) => (
+              <ProductCard
+                key={product.id}
+                img={product.image}
+                title={product.name}
+                desc={product.description}
+                availible={product.isAvailable}
+                rating={product.rating}
+              />
+            ))}
+          </FeaturedProducts>
+          <Footer>
+            <p>&copy; 2022 My Web Store. All rights reserved.</p>
+          </Footer>
+        </AppContainer>
+      )}
+    </>
   )
 }
 
 const AppContainer = styled.div`
-  font-family: Arial, sans-serif;
   text-align: center;
   background-color: #f1f1f1;
-`
-
-const Header = styled.header`
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
-`
-
-const Title = styled.h1`
-  font-size: 24px;
-  margin-bottom: 10px;
-`
-
-const Nav = styled.nav`
-  ul {
-    list-style-type: none;
-  }
-
-  ul li {
-    display: inline-block;
-    margin-right: 10px;
-  }
-
-  ul li a {
-    color: #fff;
-    text-decoration: none;
-    padding: 5px;
-  }
 `
 
 const Banner = styled.section`
   background-color: #fff;
   text-align: center;
   padding: 50px;
+
+  @media (max-width: 380px) {
+    width: 100vh;
+  }
 `
 
 const BannerTitle = styled.h2`
@@ -122,74 +111,42 @@ const BannerText = styled.p`
   margin-bottom: 20px;
 `
 
-const Button = styled.a`
+export const Button = styled.button`
   display: inline-block;
-  background-color: #333;
-  color: #fff;
+  border: none;
+  background-color: ${(props) => props.theme.black};
+  color: ${(props) => props.theme.white};
   padding: 10px 20px;
   text-decoration: none;
   border-radius: 5px;
+  transition: 0.3s;
+
+  :disabled {
+    background-color: ${(props) => props.theme.grey};
+  }
+
+  :hover {
+    color: ${(props) => props.theme.primaryHover};
+    background-color: ${(props) => props.theme.primary};
+  }
 `
 
-const FeaturedProducts = styled.section`
-  text-align: center;
-  padding: 50px;
+const FeaturedProducts = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 50px;
+  @media (max-width: 380px) {
+    width: 100vh;
+  }
 `
 
 const FeaturedProductsTitle = styled.h2`
   font-size: 24px;
-  margin-bottom: 20px;
-`
+  margin-top: 50px;
 
-const Product = styled.div`
-  display: inline-block;
-  text-align: center;
-  margin: 0 20px;
-`
-
-const ProductImage = styled.img`
-  width: 200px;
-  height: 200px;
-  margin-bottom: 10px;
-`
-
-const ProductTitle = styled.h3`
-  font-size: 18px;
-  margin-bottom: 5px;
-`
-
-const ProductPrice = styled.p`
-  font-size: 16px;
-  margin-bottom: 10px;
-`
-
-const Newsletter = styled.section`
-  background-color: #f9f9f9;
-  text-align: center;
-  padding: 50px;
-`
-
-const NewsletterTitle = styled.h2`
-  font-size: 24px;
-  margin-bottom: 20px;
-`
-
-const NewsletterForm = styled.form`
-  input[type='email'] {
-    padding: 10px;
-    width: 300px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-right: 10px;
-  }
-
-  .btn {
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  @media (max-width: 380px) {
+    width: 100vh;
   }
 `
 
@@ -198,6 +155,10 @@ const Footer = styled.footer`
   color: #fff;
   text-align: center;
   padding: 20px;
+
+  @media (max-width: 380px) {
+    width: 100vh;
+  }
 `
 
 export default HomePage
