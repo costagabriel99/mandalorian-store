@@ -16,11 +16,6 @@ const Title = styled.h2`
   margin-bottom: 8px;
 `
 
-const Label = styled.label`
-  font-weight: bold;
-  margin-bottom: 4px;
-`
-
 const CheckboxGroup = styled.div`
   display: flex;
   flex-wrap: wrap;
