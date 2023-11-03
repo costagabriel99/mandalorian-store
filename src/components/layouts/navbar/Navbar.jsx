@@ -1,14 +1,17 @@
 import styled from 'styled-components'
 
+import Cart from '../../cart/Cart'
+
 const Header = styled.header`
   display: flex;
+  flex: 1;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   background-color: ${(props) => props.theme.Trueblack};
-  color: #fff;
-  padding: 20px;
+  padding: 10px 30px;
   flex-wrap: wrap;
   width: 100%;
+  margin: 0;
 
   @media (max-width: 380px) {
     width: 100vh;
@@ -19,12 +22,11 @@ const Title = styled.h1`
   font-size: 24px;
   margin-bottom: 10px;
   min-width: 360px;
-  flex: 1;
+  color: ${(props) => props.theme.white};
 `
 
 const Nav = styled.nav`
-  flex: 1;
-  min-width: 300px;
+  min-width: 30px;
   ul {
     list-style-type: none;
   }
@@ -34,26 +36,18 @@ const Nav = styled.nav`
     margin-right: 10px;
   }
 `
+const PrimaryColor = styled.span`
+  color: ${({ theme }) => theme.primary};
+`
 
 export default function Navbar() {
   return (
     <Header>
-      <Title>Mandalarian Store</Title>
-      <Nav>
-        <ul>
-          <li>
-            <a href="#">Home</a>
-          </li>
-          <li>
-            <a href="#">Shop</a>
-          </li>
-          <li>
-            <a href="#">About</a>
-          </li>
-          <li>
-            <a href="#">Contact</a>
-          </li>
-        </ul>
+      <Title>
+        Mandalarian <PrimaryColor>Store</PrimaryColor>
+      </Title>
+      <Nav id="Home">
+        <Cart />
       </Nav>
     </Header>
   )

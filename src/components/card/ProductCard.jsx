@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Stars from '../layouts/rating/Stars'
 import { Button } from '../../../pages'
 
-export default function ProductCard({ img, title, price, desc, availible, rating }) {
+export default function ProductCard({ img, title, price, desc, available, rating }) {
   return (
     <Product>
       <ImageContainer>
@@ -13,13 +13,9 @@ export default function ProductCard({ img, title, price, desc, availible, rating
       <Stars rating={rating} />
       <ProductPrice>${price}</ProductPrice>
       <Description>{desc}</Description>
-      {availible ? (
-        <Button href="#" className="btn">
-          Add to Cart
-        </Button>
-      ) : (
-        <Button disabled="true">Não disponível</Button>
-      )}
+      <Button href="#" $available={available}>
+        {available ? 'Add to Cart' : 'Não disponível'}
+      </Button>
     </Product>
   )
 }
@@ -75,6 +71,6 @@ const ProductPrice = styled.p`
 const Description = styled.p`
   font-size: 14px;
   margin: 10px;
-  width: 200px;
+  width: 230px;
   height: 50px;
 `
