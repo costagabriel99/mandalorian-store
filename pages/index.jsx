@@ -29,7 +29,7 @@ function HomePage() {
   }
 
   useEffect(() => {
-    fetcher()
+    setTimeout(() => fetcher(), 1000)
   }, [])
 
   return (
