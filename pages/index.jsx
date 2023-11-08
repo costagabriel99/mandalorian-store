@@ -62,7 +62,7 @@ function HomePage() {
 
 const AppContainer = styled.div`
   text-align: center;
-  background-color: #f1f1f1;
+  background-color: ${(props) => props.theme.white};
 `
 
 const FeaturedProducts = styled.div`
