@@ -8,13 +8,18 @@ const Header = styled.header`
   align-items: center;
   justify-content: space-between;
   background-color: ${(props) => props.theme.Trueblack};
-  padding: 10px 30px;
+  padding: 20px 2%;
   flex-wrap: wrap;
   width: 100%;
   margin: 0;
 
   @media (max-width: 380px) {
     width: 100vh;
+    justify-content: space-between;
+  }
+  @media (max-width: 500px) {
+    flex-wrap: nowrap;
+    justify-content: space-around;
   }
 `
 

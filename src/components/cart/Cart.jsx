@@ -2,17 +2,24 @@ import styled from 'styled-components'
 import { FaShoppingCart } from 'react-icons/fa'
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+  position: relative;
   align-items: center;
-  padding: 24px;
+  padding-right: 20px;
+
+  @media (max-width: 500px) {
+    padding: 0;
+  }
 `
 
 const CartIcon = styled.div`
+  display: flex;
   width: 30px;
   height: 30px;
   font-size: 30px;
   color: ${(props) => props.theme.white};
+  position: absolute;
+  right: 20px;
+  bottom: -10px;
 
   :hover {
     color: ${(props) => props.theme.primary};

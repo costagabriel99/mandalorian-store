@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import Stars from '../layouts/rating/Stars'
-import { Button } from '../../../pages'
+import { Button } from '../layouts/button/Button'
 
 export default function ProductCard({ img, title, price, desc, available, rating }) {
   return (

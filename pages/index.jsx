@@ -29,9 +29,7 @@ function HomePage() {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      fetcher()
-    }, 4000)
+    fetcher()
   }, [])
 
   return (
@@ -65,24 +63,6 @@ function HomePage() {
 const AppContainer = styled.div`
   text-align: center;
   background-color: #f1f1f1;
-`
-
-export const Button = styled.button`
-  display: inline-block;
-  border: none;
-  margin-top: 15px;
-  background-color: ${(props) => (props.$available ? props.theme.Trueblack : props.theme.disable)};
-  color: ${(props) => props.theme.white};
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: 0.3s;
-  cursor: ${(props) => (props.$available ? 'pointer' : 'default')};
-
-  :hover {
-    color: ${(props) => props.theme.primaryHover};
-    background-color: ${(props) => (props.$available ? props.theme.primary : props.theme.disable)};
-  }
 `
 
 const FeaturedProducts = styled.div`
