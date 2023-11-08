@@ -33,6 +33,22 @@ const GlobalStyle = createGlobalStyle`
   a:hover {
     color: ${(props) => props.theme.primaryHover}
   }
+
+  @media (min-width: 450px){
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 7px;
+      background-color: ${(props) => props.theme.white};
+      cursor: pointer;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: ${(props) => props.theme.primary};
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: ${(props) => props.theme.white};
+    }
+  }
 `
 
 function App({ Component, pageProps }) {
